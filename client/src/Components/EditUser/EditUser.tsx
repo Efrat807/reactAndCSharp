@@ -67,7 +67,7 @@ const EditUser = () => {
 			</div>
 			<div className={classes.userBody}>
 				<img
-					src={user ? user.image : anonymousUserImg}
+					src={user ? user.image || anonymousUserImg : anonymousUserImg}
 					className={classes.profileImg}
 				/>
 				<Formik
