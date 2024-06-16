@@ -1,0 +1,30 @@
+.title {
+	background-color: rgb(129, 130, 196);
+	height: 60px;
+	border-radius: 17px 17px 0 0;
+	position:relative;
+	width: 273px;
+	display: flex;
+	justify-content: space-around;
+	// margin-bottom: 60px;
+}
+.userCard {
+	border: 2px solid black;
+	border-radius: 18px;
+	padding-top: -35px;
+}
+.profileImg {
+	width: 150px;
+	border-radius: 150px;
+	margin-bottom: 30px;
+}
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 25px;
+}
+.userBody {
+	padding: 50px 25px 25px 25px;
+	// display: flex;
+	// flex-direction: column;
+}

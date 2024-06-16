@@ -1,0 +1,20 @@
+.card {
+    width: 300px;
+    border: 2px solid darkslategray;
+    padding-inline: 100px;
+    padding-block: 30px;
+}
+.userName {
+    font-size: xx-large;
+    font-weight: 800;
+}
+.profileImg {
+    width: 150px;
+    border-radius: 150px;
+}
+
+.bodyCard {
+    text-align: start;
+    display: flex;
+    flex-direction: column;
+}
