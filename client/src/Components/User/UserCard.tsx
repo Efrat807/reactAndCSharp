@@ -7,12 +7,9 @@ import { useGetUserById } from '../../ApiService/Requests/UseUser';
 
 const UserCard = ({ onEdit }: { onEdit: () => any }) => {
 	const { id } = useParams<{ id: string }>();
-	// const { GetAll } = useReactQuery();
-	// const { data: users } = GetAll('/User', true, 'Users');
-	// const user = users?.find((u) => u.userId == id);
 	const navigate = useNavigate();
 	const { user } = useGetUserById(id || '');
-	
+
 	return (
 		<div className={classes.card}>
 			<header>

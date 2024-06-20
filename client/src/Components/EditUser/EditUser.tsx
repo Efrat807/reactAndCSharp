@@ -1,6 +1,6 @@
 import { Formik, Form } from 'formik';
 import { IUser } from '../../ApiService/Interfaces/IUser';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
 import classes from './EditUser.module.scss';
 import { ChangeEvent } from 'react';
@@ -23,9 +23,6 @@ type editPropsType = {
 const EditUser = ({ onSave, onCancel }: editPropsType) => {
 	const { id } = useParams<{ id: string }>();
 	const { updateUser, createUser } = useUser();
-	// const { users } = useGetAllUsers();
-
-	// const user = (users as IUser[])?.find((u) => u.userId == id);
 	const { user } = useGetUserById(id || '');
 
 

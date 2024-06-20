@@ -36,7 +36,6 @@ export const useGetAllUsers = (options?: QueryOptions<IUser[]>) => {
 };
 
 export const useGetUserById = (id: string, options?: QueryOptions<IUser>) => {
-	// const url = `${USER_QUERY_KEY}/${id}`;
 	const { data: user, ...queryInfo } = useQuery<IUser>({
 		queryKey: [`${USER_QUERY_KEY}/${id}`],
 		queryFn: async ({ queryKey: [USER_QUERY_KEY] }) => {
