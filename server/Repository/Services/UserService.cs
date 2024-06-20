@@ -19,6 +19,10 @@ namespace Repository.Services
         {
             return _users.Find(_ => true).ToList();
         }
+        public UserModel GetUser(string id)
+        {
+            return _users.Find(user=>user.UserId == id).First();
+        }
         public void UpdateUser(UserModel updateUser) 
         {
             ReplaceOneResult result = _users.ReplaceOne(user=> user.UserId == updateUser.UserId, updateUser);

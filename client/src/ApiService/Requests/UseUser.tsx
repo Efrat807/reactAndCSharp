@@ -34,6 +34,19 @@ export const useGetAllUsers = (options?: QueryOptions<IUser[]>) => {
 	});
 	return { users, ...queryInfo };
 };
+
+export const useGetUserById = (id: string, options?: QueryOptions<IUser>) => {
+	// const url = `${USER_QUERY_KEY}/${id}`;
+	const { data: user, ...queryInfo } = useQuery<IUser>({
+		queryKey: [`${USER_QUERY_KEY}/${id}`],
+		queryFn: async ({ queryKey: [USER_QUERY_KEY] }) => {
+			const { data } = await apiClient.get<IUser>(`${USER_QUERY_KEY}`);
+			return data;
+		},
+		...options,
+	});
+	return { user, ...queryInfo };
+};
 function compareObjects(oldQueryData: unknown, newQueryData: unknown) {
 	if (oldQueryData === newQueryData) {
 		const errorMsg =
@@ -46,7 +59,7 @@ function compareObjects(oldQueryData: unknown, newQueryData: unknown) {
 export const updateRQCacheAfterUpdate = (
 	UpdatedData: any,
 	queryClient: QueryClient,
-	queryKey: string
+	queryKey: string | string[]
 ) => {
 	queryClient.setQueryData([queryKey], (oldData: any) => {
 		compareObjects(oldData, UpdatedData);

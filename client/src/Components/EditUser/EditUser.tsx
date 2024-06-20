@@ -7,20 +7,27 @@ import { ChangeEvent } from 'react';
 import {
 	updateRQCacheAfterCreate,
 	updateRQCacheAfterUpdate,
-	useGetAllUsers,
+	useGetUserById,
 	useUser,
 } from '../../ApiService/Requests/UseUser';
 import anonymousUserImg from '../../assets/anonymousUserImg.jpg';
 import { USER_QUERY_KEY } from '../../ApiService/Requests/QueryKeys';
 import { queryClient } from '../../Utils/ReactQueryConfig';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-const EditUser = () => {
+type editPropsType = {
+	onSave?: () => void;
+	onCancel?: () => void;
+};
+
+const EditUser = ({ onSave, onCancel }: editPropsType) => {
 	const { id } = useParams<{ id: string }>();
 	const { updateUser, createUser } = useUser();
-	const { users } = useGetAllUsers();
+	// const { users } = useGetAllUsers();
 
-	const user = (users as IUser[])?.find((u) => u.userId == id);
-	const navigate = useNavigate();
+	// const user = (users as IUser[])?.find((u) => u.userId == id);
+	const { user } = useGetUserById(id || '');
+
 
 	const initialUserValues: IUser = {
 		...(user || {
@@ -40,15 +47,20 @@ const EditUser = () => {
 						updateRQCacheAfterUpdate(
 							updatedUser,
 							queryClient,
-							`${USER_QUERY_KEY}`
+							`${USER_QUERY_KEY}/${id}`
 						);
-						navigate('/');
+						updateRQCacheAfterUpdate(
+							updatedUser,
+							queryClient,
+							USER_QUERY_KEY
+						);
+						onSave && onSave();
 					},
 			  })
 			: createUser(values, {
 					onSuccess: (createdUser) => {
 						updateRQCacheAfterCreate(createdUser, queryClient, USER_QUERY_KEY);
-						navigate('/');
+						onSave && onSave();
 					},
 			  });
 	};
@@ -56,13 +68,15 @@ const EditUser = () => {
 	return (
 		<div className={classes.userCard}>
 			<div className={classes.title}>
-				<h2>Edit User</h2>
+				<h2 className={classes.titleText}>Edit User</h2>
 				<Button
-					onClick={() => navigate('/')}
+					onClick={() => {
+						onCancel && onCancel();
+						// navigate('/');
+					}}
 					style={{ color: 'black', marginTop: '19px' }}
 				>
-					{' '}
-					{'>>'}
+					<ArrowForwardIosIcon />
 				</Button>
 			</div>
 			<div className={classes.userBody}>

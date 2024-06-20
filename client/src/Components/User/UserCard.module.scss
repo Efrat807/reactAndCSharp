@@ -1,20 +1,33 @@
+header {
+	background-color: rgb(129, 130, 196);
+	padding: 0 0 20px 0;
+	margin-bottom: 20px;
+	display: flex;
+	justify-content: space-between;
+	height: 60px;
+}
+.titleText {
+	margin-left: 140px;
+}
 .card {
-    width: 300px;
-    border: 2px solid darkslategray;
-    padding-inline: 100px;
-    padding-block: 30px;
+	width: 400px;
+	border: 2px solid darkslategray;
+	// padding-inline: 100px;
+	// padding-block: 30px;
 }
 .userName {
-    font-size: xx-large;
-    font-weight: 800;
+	font-size: xx-large;
+	font-weight: 800;
 }
 .profileImg {
-    width: 150px;
-    border-radius: 150px;
+	width: 150px;
+	border-radius: 150px;
 }
 
 .bodyCard {
-    text-align: start;
-    display: flex;
-    flex-direction: column;
+	text-align: start;
+	display: flex;
+	flex-direction: column;
+	padding-block: 30px;
+	padding-inline: 50px;
 }

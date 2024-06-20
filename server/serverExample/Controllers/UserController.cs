@@ -16,7 +16,7 @@ namespace serverExample.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetAllUsers() 
+        public ActionResult GetAllUsers()
         {
             try
             {
@@ -26,6 +26,20 @@ namespace serverExample.Controllers
             catch (Exception e)
             {
                 return BadRequest($"get all users faild. {e.Message}");
+            }
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult GetUser(string id)
+        {
+            try
+            {
+                UserModel user = Repository.UserService.GetUser(id);
+                return Ok(user);
+            }
+            catch (Exception e)
+            {
+                return BadRequest($"faild to get user: {id}. {e.Message}");
             }
         }
 
