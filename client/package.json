@@ -19,12 +19,14 @@
     "@tanstack/react-query-devtools": "^5.40.1",
     "ag-grid-community": "^31.3.2",
     "ag-grid-react": "^31.3.2",
+    "atom": "^1.4.2",
     "axios": "^1.7.1",
     "formik": "^2.4.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-query": "^3.39.3",
-    "react-router-dom": "^6.23.1"
+    "react-router-dom": "^6.23.1",
+    "recoil": "^0.7.7"
   },
   "devDependencies": {
     "@types/node": "^20.12.12",

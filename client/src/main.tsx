@@ -7,15 +7,19 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { queryClient } from './Utils/ReactQueryConfig.tsx';
 import { StrictMode } from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
+
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<StrictMode>
 		<BrowserRouter>
-			<QueryClientProvider client={queryClient}>
-				<App />
-				{/* <ReactQueryDevtools client={queryClient}/> */}
-			</QueryClientProvider>
+			<RecoilRoot>
+				<QueryClientProvider client={queryClient}>
+					<App />
+					{/* <ReactQueryDevtools client={queryClient}/> */}
+				</QueryClientProvider>
+			</RecoilRoot>
 		</BrowserRouter>
 	</StrictMode>
 );

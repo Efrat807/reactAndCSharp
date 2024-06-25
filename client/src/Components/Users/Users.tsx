@@ -5,10 +5,13 @@ import './Users.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useGetAllUsers, useUser } from '../../ApiService/Requests/UseUser';
 import { Button } from '@mui/material';
+import { IsEditingAtom } from '../../Atoms/Atoms';
+import { useSetRecoilState } from 'recoil';
 
 const Users = () => {
 	const { users, isLoading, error } = useGetAllUsers();
 	const { deleteUser } = useUser();
+	const setIsEditingAtom = useSetRecoilState(IsEditingAtom);
 	// const { GetAll } = useReactQuery();
 	// const { data, error, isLoading } = GetAll('/User', true, 'users');
 
@@ -33,13 +36,22 @@ const Users = () => {
 
 	return (
 		<div className="ag-theme-alpine" style={{ height: 800, width: 1300 }}>
-			<Button onClick={()=>{navigate('/userCard')}}>create new user</Button>
+			<Button
+				onClick={() => {
+					// setIsEditingAtom(true);
+					navigate('/userCard');
+				}}
+			>
+				create new user
+			</Button>
 			<h5>Bradford Prohaska</h5>
 			<AgGridReact<IUser>
 				rowData={users}
 				columnDefs={columnDefs}
 				defaultColDef={{ sortable: true, filter: true }}
-				onRowDoubleClicked={(params) => navigate(`/userCard/${params.data?.userId}`)}
+				onRowDoubleClicked={(params) =>
+					navigate(`/userCard/${params.data?.userId}`)
+				}
 			/>
 		</div>
 	);

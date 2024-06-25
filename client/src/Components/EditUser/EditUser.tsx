@@ -1,6 +1,6 @@
 import { Formik, Form } from 'formik';
 import { IUser } from '../../ApiService/Interfaces/IUser';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
 import classes from './EditUser.module.scss';
 import { ChangeEvent } from 'react';
@@ -14,27 +14,27 @@ import anonymousUserImg from '../../assets/anonymousUserImg.jpg';
 import { USER_QUERY_KEY } from '../../ApiService/Requests/QueryKeys';
 import { queryClient } from '../../Utils/ReactQueryConfig';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { IsEditingAtom } from '../../Atoms/Atoms';
+import { useSetRecoilState } from 'recoil';
 
-type editPropsType = {
-	onSave?: () => void;
-	onCancel?: () => void;
-};
-
-const EditUser = ({ onSave, onCancel }: editPropsType) => {
+const EditUser = () => {
 	const { id } = useParams<{ id: string }>();
 	const { updateUser, createUser } = useUser();
 	const { user } = useGetUserById(id || '');
-
+	const  setIsEditingAtom  = useSetRecoilState(IsEditingAtom);
+	const navigate = useNavigate();
 
 	const initialUserValues: IUser = {
-		...(user || {
-			domain: '',
-			email: '',
-			firstName: '',
-			lastName: '',
-			image: '',
-			phone: '',
-		}),
+		...(user && !Array.isArray(user)
+			? user
+			: {
+					domain: '',
+					email: '',
+					firstName: '',
+					lastName: '',
+					image: '',
+					phone: '',
+			  }),
 	};
 
 	const onSubmit = (values: IUser) => {
@@ -46,18 +46,17 @@ const EditUser = ({ onSave, onCancel }: editPropsType) => {
 							queryClient,
 							`${USER_QUERY_KEY}/${id}`
 						);
-						updateRQCacheAfterUpdate(
-							updatedUser,
-							queryClient,
-							USER_QUERY_KEY
-						);
-						onSave && onSave();
+						updateRQCacheAfterUpdate(updatedUser, queryClient, USER_QUERY_KEY);
+						setIsEditingAtom(false);
 					},
 			  })
 			: createUser(values, {
 					onSuccess: (createdUser) => {
+						console.log(createdUser, 'created user');
+
 						updateRQCacheAfterCreate(createdUser, queryClient, USER_QUERY_KEY);
-						onSave && onSave();
+						setIsEditingAtom(false);
+						navigate(`/userCard/${createdUser.userId}`)
 					},
 			  });
 	};
@@ -68,7 +67,7 @@ const EditUser = ({ onSave, onCancel }: editPropsType) => {
 				<h2 className={classes.titleText}>Edit User</h2>
 				<Button
 					onClick={() => {
-						onCancel && onCancel();
+						setIsEditingAtom(false);
 						// navigate('/');
 					}}
 					style={{ color: 'black', marginTop: '19px' }}
