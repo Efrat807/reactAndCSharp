@@ -30,7 +30,7 @@ const Users = () => {
 	if (error) return <div>Error: {(error as Error).message}</div>;
 
 	return (
-		<div className="ag-theme-alpine" style={{ height: 700, width: 1300, marginBottom: '150px' }}>
+		<div className="ag-theme-alpine" style={{ height: 700, width: 1200, marginBottom: '150px' }}>
 			<Button
 				onClick={() => {
 					navigate('/createUpdateUser');
