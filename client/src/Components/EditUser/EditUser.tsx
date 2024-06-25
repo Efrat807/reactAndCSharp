@@ -14,14 +14,11 @@ import anonymousUserImg from '../../assets/anonymousUserImg.jpg';
 import { USER_QUERY_KEY } from '../../ApiService/Requests/QueryKeys';
 import { queryClient } from '../../Utils/ReactQueryConfig';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { IsEditingAtom } from '../../Atoms/Atoms';
-import { useSetRecoilState } from 'recoil';
 
 const EditUser = () => {
 	const { id } = useParams<{ id: string }>();
 	const { updateUser, createUser } = useUser();
 	const { user } = useGetUserById(id || '');
-	const  setIsEditingAtom  = useSetRecoilState(IsEditingAtom);
 	const navigate = useNavigate();
 
 	const initialUserValues: IUser = {
@@ -47,7 +44,7 @@ const EditUser = () => {
 							`${USER_QUERY_KEY}/${id}`
 						);
 						updateRQCacheAfterUpdate(updatedUser, queryClient, USER_QUERY_KEY);
-						setIsEditingAtom(false);
+						navigate(`/userCard/${updatedUser.userId}`)
 					},
 			  })
 			: createUser(values, {
@@ -55,7 +52,6 @@ const EditUser = () => {
 						console.log(createdUser, 'created user');
 
 						updateRQCacheAfterCreate(createdUser, queryClient, USER_QUERY_KEY);
-						setIsEditingAtom(false);
 						navigate(`/userCard/${createdUser.userId}`)
 					},
 			  });
@@ -67,8 +63,7 @@ const EditUser = () => {
 				<h2 className={classes.titleText}>Edit User</h2>
 				<Button
 					onClick={() => {
-						setIsEditingAtom(false);
-						// navigate('/');
+						navigate(`/userCard/${id}`);
 					}}
 					style={{ color: 'black', marginTop: '19px' }}
 				>

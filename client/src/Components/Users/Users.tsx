@@ -5,15 +5,10 @@ import './Users.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useGetAllUsers, useUser } from '../../ApiService/Requests/UseUser';
 import { Button } from '@mui/material';
-import { IsEditingAtom } from '../../Atoms/Atoms';
-import { useSetRecoilState } from 'recoil';
 
 const Users = () => {
 	const { users, isLoading, error } = useGetAllUsers();
 	const { deleteUser } = useUser();
-	const setIsEditingAtom = useSetRecoilState(IsEditingAtom);
-	// const { GetAll } = useReactQuery();
-	// const { data, error, isLoading } = GetAll('/User', true, 'users');
 
 	const navigate = useNavigate();
 
@@ -35,16 +30,14 @@ const Users = () => {
 	if (error) return <div>Error: {(error as Error).message}</div>;
 
 	return (
-		<div className="ag-theme-alpine" style={{ height: 800, width: 1300 }}>
+		<div className="ag-theme-alpine" style={{ height: 700, width: 1300, marginBottom: '150px' }}>
 			<Button
 				onClick={() => {
-					// setIsEditingAtom(true);
-					navigate('/userCard');
+					navigate('/createUpdateUser');
 				}}
 			>
 				create new user
 			</Button>
-			<h5>Bradford Prohaska</h5>
 			<AgGridReact<IUser>
 				rowData={users}
 				columnDefs={columnDefs}

@@ -4,14 +4,11 @@ import { Button } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useGetUserById } from '../../ApiService/Requests/UseUser';
-import { IsEditingAtom } from '../../Atoms/Atoms';
-import { useSetRecoilState } from 'recoil';
 
 const UserCard = () => {
 	const { id } = useParams<{ id: string }>();
 	const navigate = useNavigate();
 	const { user } = useGetUserById(id || '');
-	const setIsEditingAtom = useSetRecoilState(IsEditingAtom);
 
 	return (
 		<div className={classes.card}>
@@ -31,7 +28,7 @@ const UserCard = () => {
 						<div className={classes.userName}>
 							<span>{user.firstName} </span>
 							<span>{user.lastName}</span>
-							<Button onClick={() => setIsEditingAtom(true)}>
+							<Button onClick={() => navigate(`/createUpdateUser/${id}`)}>
 								<EditIcon />
 							</Button>
 						</div>
