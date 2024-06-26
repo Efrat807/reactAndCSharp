@@ -9,7 +9,6 @@ import { Button } from '@mui/material';
 const Users = () => {
 	const { users, isLoading, error } = useGetAllUsers();
 	const { deleteUser } = useUser();
-
 	const navigate = useNavigate();
 
 	const columnDefs: ColDef[] = [
